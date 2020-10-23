@@ -8,6 +8,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import br.com.bicicletas.repository.BicicletasRepository;
+
 @Entity
 public class Bicicletas implements Serializable {
 
@@ -20,9 +22,20 @@ public class Bicicletas implements Serializable {
 	private String descricao;
 	private String modelo;
 	private double preco;
-	private String nomeComrador;
+	private String nomeComprador;
 	private String loja;
 	private LocalDateTime dataCompra = LocalDateTime.now();
+
+	public Bicicletas() {
+	}
+
+	public Bicicletas(String descricao, String modelo, double preco, String nomeComprador, String loja) {
+		this.descricao = descricao;
+		this.modelo = modelo;
+		this.preco = preco;
+		this.nomeComprador = nomeComprador;
+		this.loja = loja;
+	}
 
 	@Override
 	public int hashCode() {
@@ -49,12 +62,12 @@ public class Bicicletas implements Serializable {
 		return true;
 	}
 
-	public String getNomeComrador() {
-		return nomeComrador;
+	public String getNomeComprador() {
+		return nomeComprador;
 	}
 
-	public void setNomeComrador(String nomeComrador) {
-		this.nomeComrador = nomeComrador;
+	public void setNomeComprador(String nomeComprador) {
+		this.nomeComprador = nomeComprador;
 	}
 
 	public String getLoja() {
@@ -103,6 +116,12 @@ public class Bicicletas implements Serializable {
 
 	public void setDataCompra(LocalDateTime dataCompra) {
 		this.dataCompra = dataCompra;
+	}
+
+	public Bicicletas atualizarDescricao(Long id, BicicletasRepository bicicletasRepository) {
+		Bicicletas bicicletas = bicicletasRepository.getOne(id);
+		bicicletas.setDescricao(this.descricao);
+		return bicicletas;
 	}
 
 }
